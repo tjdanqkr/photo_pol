@@ -8,7 +8,7 @@ interface ThemeState {
 
 // Define the initial state using that type
 const initialState: ThemeState = {
-  mode: localStorage.getItem('theme') === 'dark' ? 'dark' : 'light',
+  mode: localStorage.getItem('mode') === 'dark' ? 'dark' : 'light',
 };
 
 export const themeSlice = createSlice({
@@ -16,13 +16,10 @@ export const themeSlice = createSlice({
   initialState,
   reducers: {
     darkMode: (state) => {
-      console.log('dark');
-
       localStorage.setItem('mode', 'dark');
       state.mode = 'dark';
     },
     lightMode: (state) => {
-      console.log('light');
       localStorage.setItem('mode', 'light');
       state.mode = 'light';
     },
