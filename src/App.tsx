@@ -8,6 +8,7 @@ import { useAppSelector } from './store/hooks';
 const Container = styled.div`
   background-color: ${(props) => props.theme.mainBackground};
   color: ${(props) => props.theme.color};
+  height: 100%;
 `;
 
 function App() {
