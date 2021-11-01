@@ -5,7 +5,7 @@ function Headers() {
   const mode = useAppSelector((state) => state.theme.mode);
   const dispatch = useAppDispatch();
   return (
-    <Navbar collapseOnSelect expand="lg" bg={mode} variant={mode} sticky="top">
+    <Navbar collapseOnSelect expand="md" bg={mode} variant={mode} sticky="top">
       <Container>
         <Navbar.Brand href="#home">박성무의 경력 기술서</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

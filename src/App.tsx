@@ -1,13 +1,16 @@
 import styled, { ThemeProvider } from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Headers from './components/layout/Headers';
-import Main from './components/layout/Main';
 import { darktheme, lighttheme } from './style/theme';
 import GlobalStyle from './style/global-style';
 import { useAppSelector } from './store/hooks';
-const Container = styled.div`
+import { Col, Row, Container } from 'react-bootstrap';
+const MyContainer = styled.div`
   background-color: ${(props) => props.theme.mainBackground};
   color: ${(props) => props.theme.color};
+  height: 100%;
+`;
+const Main = styled.div`
   height: 100%;
 `;
 
@@ -16,10 +19,34 @@ function App() {
   return (
     <ThemeProvider theme={mode === 'dark' ? darktheme : lighttheme}>
       <GlobalStyle />
-      <Container>
+      <MyContainer>
         <Headers></Headers>
-        <Main></Main>
-      </Container>
+        <Container fluid="md">
+          <Row>
+            <Col md={'auto'}>
+              <Main>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+                <h2>main</h2>
+              </Main>
+            </Col>
+          </Row>
+        </Container>
+      </MyContainer>
     </ThemeProvider>
   );
 }
