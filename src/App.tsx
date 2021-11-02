@@ -7,6 +7,7 @@ import { useAppSelector } from './store/hooks';
 import { Container } from 'react-bootstrap';
 import ControlRoute from './router';
 import Footer from './components/layout/Footer';
+import { BrowserRouter } from 'react-router-dom';
 const MyContainer = styled.div`
   background-color: ${(props) => props.theme.mainBackground};
   color: ${(props) => props.theme.color};
@@ -28,7 +29,9 @@ function App() {
       <GlobalStyle />
       <MyContainer>
         <header>
-          <Headers></Headers>
+          <BrowserRouter basename={process.env.PUBLIC_URL}>
+            <Headers></Headers>
+          </BrowserRouter>
         </header>
         <main>
           <Main>
