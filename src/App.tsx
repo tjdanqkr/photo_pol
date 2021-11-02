@@ -8,18 +8,18 @@ import { Container } from 'react-bootstrap';
 import ControlRoute from './router';
 import Footer from './components/layout/Footer';
 import { BrowserRouter } from 'react-router-dom';
+import './App.css';
 const MyContainer = styled.div`
   background-color: ${(props) => props.theme.mainBackground};
   color: ${(props) => props.theme.color};
   position: relative;
   min-height: 100vh;
   display: grid;
-  // align-content: space-between;
-  grid-template-rows: 1fr 12fr;
+  align-items: stretch;
 `;
 const Main = styled.div`
-  padding-top: 1em;
   min-height: 100%;
+  margin-bottom: 2em;
 `;
 
 function App() {
@@ -35,9 +35,7 @@ function App() {
         </header>
         <main>
           <Main>
-            <Container fluid="md">
-              <ControlRoute></ControlRoute>
-            </Container>
+            <ControlRoute></ControlRoute>
           </Main>
         </main>
         <footer>
