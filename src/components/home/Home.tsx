@@ -61,6 +61,10 @@ const TechImgTem = styled.div`
 const TechText = styled.div`
   text-align: center;
 `;
+const Techauthorship = styled.span`
+  text-overflow: clip;
+  overflow: hidden;
+`;
 
 const ContentForm = styled.div`
   display: flex;
@@ -85,6 +89,7 @@ const ContentSub = styled.div`
 type tech = {
   img: string;
   text: string;
+  authorship: string;
 }[];
 
 type content = {
@@ -97,14 +102,20 @@ function Home() {
     {
       img: 'redux.png',
       text: 'redux',
+      authorship:
+        'https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedia.vlpt.us%2Fimages%2Fraejoonee%2Fpost%2F32d60e88-148d-4398-a218-f645bc220bff%2Fimg.png&imgrefurl=https%3A%2F%2Fvelog.io%2F%40raejoonee%2FcreateAsyncThunk&tbnid=8_pa9AGynWM03M&vet=12ahUKEwixlKGgkfrzAhXN4mEKHdiKAsoQMygAegUIARCyAQ..i&docid=n4br-NumUlz8hM&w=1200&h=600&q=redux&ved=2ahUKEwixlKGgkfrzAhXN4mEKHdiKAsoQMygAegUIARCyAQ',
     },
     {
       img: 'saga.png',
       text: 'redux-saga',
+      authorship:
+        'https://www.google.com/imgres?imgurl=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbeIpPa%2FbtqDlOIUW54%2FNUEumie8saM9aWmlkIg0n1%2Fimg.png&imgrefurl=https%3A%2F%2Fim-developer.tistory.com%2F195&tbnid=F9ORXecQDgBunM&vet=12ahUKEwiylKPEkfrzAhVKd94KHSh6CSIQMygBegUIARC3AQ..i&docid=sG5yWfhvHAgnUM&w=800&h=167&q=redux-saga&ved=2ahUKEwiylKPEkfrzAhVKd94KHSh6CSIQMygBegUIARC3AQ',
     },
     {
-      img: '73084694_2423120627903939_2518955300711563264_n.png',
+      img: '115.png',
       text: '외부 맵 API',
+      authorship:
+        'https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedia.vlpt.us%2Fimages%2Fchy0428%2Fpost%2Fc06a62d2-f370-442a-813f-48733487c19d%2Fogtag.png&imgrefurl=https%3A%2F%2Fvelog.io%2F%40chy0428%2Fkakaomap-Background&tbnid=HbNQn28885PQgM&vet=12ahUKEwiGvIXTkfrzAhVXD94KHU9vD5wQMygCegUIARCzAQ..i&docid=AoyYndhfc7gw9M&w=800&h=418&q=kakaomap&ved=2ahUKEwiGvIXTkfrzAhVXD94KHU9vD5wQMygCegUIARCzAQ',
     },
   ];
   const contentList: content = [
@@ -165,7 +176,9 @@ function Home() {
                     alt={data.text}
                   ></TechImg>
                 </TechImgTem>
-                <TechText>{data.text}</TechText>
+                <TechText>
+                  {data.text} <a href={data.authorship}>출처</a>
+                </TechText>
               </TechForm>
             </Col>
           ))}
