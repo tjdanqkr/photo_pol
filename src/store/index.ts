@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import themeMode from './themeMode';
+const isDev = process.env.NODE_ENV !== 'production';
 
 export const store = configureStore({
   reducer: {

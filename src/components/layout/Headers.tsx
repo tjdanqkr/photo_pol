@@ -7,11 +7,11 @@ function Headers() {
   return (
     <Navbar collapseOnSelect expand="md" bg={mode} variant={mode} sticky="top">
       <Container>
-        <Navbar.Brand href="#home">박성무의 경력 기술서</Navbar.Brand>
+        <Navbar.Brand href="#home">박성무의 경력기술서</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Home</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="#pricing">Modules</Nav.Link>
             {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
