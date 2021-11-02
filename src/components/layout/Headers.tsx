@@ -1,4 +1,6 @@
+import NavItem from '@restart/ui/esm/NavItem';
 import { Container, Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { darkMode, lightMode } from '../../store/themeMode';
 function Headers() {
@@ -11,8 +13,12 @@ function Headers() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="#pricing">Modules</Nav.Link>
+            <Nav.Link as={Link} to="/">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/modules">
+              Modules
+            </Nav.Link>
             {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
