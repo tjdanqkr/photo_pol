@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router';
 import Home from '../components/home/Home';
 
 const ControlRoute: React.FC = () => (
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Switch>
       <Route path="/" exact component={Home} />
       {/* <Route path="/modules" component={} /> */}

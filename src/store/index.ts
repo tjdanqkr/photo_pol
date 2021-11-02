@@ -6,6 +6,7 @@ export const store = configureStore({
   reducer: {
     theme: themeMode,
   },
+  devTools: isDev,
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
