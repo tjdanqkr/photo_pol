@@ -10,9 +10,14 @@ const Title = styled.div`
 `;
 const H2 = styled.div`
   font-size: 2em;
+  font-weight: bold;
 `;
 const H1 = styled.div`
   font-size: 2.5em;
+  font-weight: bold;
+`;
+const TitleText = styled.p`
+  color: #e2e2e2;
 `;
 const TitleBox = styled.div`
   display: flex;
@@ -41,6 +46,10 @@ const RelativeBox = styled.div`
   width: 7em;
 `;
 
+const TechTitle = styled.b`
+  font-size: 1.5em;
+  font-weight: bold;
+`;
 const TechForm = styled.div`
   display: flex;
   margin-right: 20 px;
@@ -86,6 +95,7 @@ const ContentSub = styled.div`
   border-radius: 1em;
   padding: 2em;
 `;
+
 type tech = {
   img: string;
   text: string;
@@ -147,6 +157,12 @@ function Home() {
                 <H2>실력있는 웹 개발자는&nbsp;</H2> <H1>페이지로&nbsp;</H1>
                 <H2>말한다!</H2>
               </TitleBox>
+              <br></br>
+              <TitleText>
+                &nbsp;&nbsp;개발자 "박성무"만의 사이트를 만들어 말로 설명하지
+                않아도 설득력이 있는 개발자가 되기 위해 경력기술서 사이트를
+                제작하였습니다.
+              </TitleText>
             </Container>
           </Title>
         </Col>
@@ -166,6 +182,9 @@ function Home() {
         </Row>
 
         <Row>
+          <Col md={12}>
+            <TechTitle>현재 박성무의 사용기술</TechTitle>
+          </Col>
           {techList.map((data, i) => (
             <Col md={4} key={i}>
               <TechForm>

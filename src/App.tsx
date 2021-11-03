@@ -14,8 +14,9 @@ const MyContainer = styled.div`
   color: ${(props) => props.theme.color};
   position: relative;
   min-height: 100vh;
-  display: grid;
-  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const Main = styled.div`
   min-height: 100%;
@@ -28,19 +29,19 @@ function App() {
     <ThemeProvider theme={mode === 'dark' ? darktheme : lighttheme}>
       <GlobalStyle />
       <MyContainer>
-        <header>
-          <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <header>
             <Headers></Headers>
-          </BrowserRouter>
-        </header>
-        <main>
-          <Main>
-            <ControlRoute></ControlRoute>
-          </Main>
-        </main>
-        <footer>
-          <Footer></Footer>
-        </footer>
+          </header>
+          <main>
+            <Main>
+              <ControlRoute></ControlRoute>
+            </Main>
+          </main>
+          <footer>
+            <Footer></Footer>
+          </footer>
+        </BrowserRouter>
       </MyContainer>
     </ThemeProvider>
   );
