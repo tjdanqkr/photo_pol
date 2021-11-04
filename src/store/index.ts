@@ -2,7 +2,7 @@ import createSagaMiddleware from '@redux-saga/core';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import rootSaga from './saga';
 import themeMode from './themeMode';
-import userLog from './userLog';
+import userLog from './corona';
 const isDev = process.env.NODE_ENV !== 'production';
 const sagaMiddleware = createSagaMiddleware();
 
@@ -10,10 +10,10 @@ const createStore = () => {
   const store = configureStore({
     reducer: {
       theme: themeMode,
-      userLog: userLog,
+      corona: userLog,
     },
     devTools: isDev,
-    middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware],
+    middleware: [sagaMiddleware],
   });
   sagaMiddleware.run(rootSaga);
   return store;

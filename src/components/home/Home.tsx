@@ -4,7 +4,6 @@ import logosvg from '../../img/logo.svg';
 const Title = styled.div`
   background-color: #212529;
   color: white;
-
   padding-top: 3em;
   padding-bottom: 3em;
 `;

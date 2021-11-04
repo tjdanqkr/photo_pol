@@ -12,7 +12,7 @@ const darktheme: DefaultTheme = {
   divider: `rgba(255,255,255,0.06)`,
   background: `rgba(255,255,255,0.04)`,
   tableHeader: `rgba(255,255,255,0.02)`,
-
+  oddBackground: `rgba(0, 0, 0, 0.85)`,
   response: {},
 };
 
@@ -28,6 +28,7 @@ const lighttheme: DefaultTheme = {
   divider: `rgba(0, 0, 0, 0.06)`,
   background: `rgba(0, 0, 0, 0.04)`,
   tableHeader: `rgba(0, 0, 0, 0.02)`,
+  oddBackground: `rgba(255,255,255,0.85)`,
 
   response: {},
 };

@@ -13,6 +13,7 @@ declare module 'styled-components' {
     divider: string;
     background: string;
     tableHeader: string;
+    oddBackground: string;
 
     response: {};
   }

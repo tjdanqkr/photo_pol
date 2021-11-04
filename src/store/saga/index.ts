@@ -1,6 +1,6 @@
 import { all } from '@redux-saga/core/effects';
-import { watchpostUserLog } from './userLogSaga';
+import { getCoronaApi } from '../corona/coronaSaga';
 
 export default function* rootSaga() {
-  yield all([watchpostUserLog()]);
+  yield all([getCoronaApi()]);
 }
