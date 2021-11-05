@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://openapi.seoul.go.kr:8088';
+axios.defaults.baseURL = 'https://openapi.seoul.go.kr:8088';
 
 const coronaApi = async (start = 1) => {
   const res = await axios.get(

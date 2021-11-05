@@ -52,7 +52,12 @@ const TableBody = (props: TableProps) => {
     return (
       <TableTr>
         {hedearList.map((data, i) => {
-          return <TableTd key={i}> {rowData[data.key]}</TableTd>;
+          return (
+            <TableTd key={i} style={{ maxWidth: `${data.size}%` }}>
+              {' '}
+              {rowData[data.key]}
+            </TableTd>
+          );
         })}
       </TableTr>
     );
