@@ -69,10 +69,6 @@ const TechImgTem = styled.div`
 const TechText = styled.div`
   text-align: center;
 `;
-const Techauthorship = styled.span`
-  text-overflow: clip;
-  overflow: hidden;
-`;
 
 const ContentForm = styled.div`
   display: flex;

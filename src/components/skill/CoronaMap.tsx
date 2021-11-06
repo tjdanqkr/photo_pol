@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import TableForm, { TableHeaderType } from '../layout/Table/TableForm';
 
@@ -94,7 +93,7 @@ function CoronaMap() {
         index: 1,
       });
     },
-    [[], dispatch],
+    [dispatch],
   );
 
   return (

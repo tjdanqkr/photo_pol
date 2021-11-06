@@ -1,5 +1,5 @@
 import createSagaMiddleware from '@redux-saga/core';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import rootSaga from './saga';
 import themeMode from './themeMode';
 import userLog from './corona';

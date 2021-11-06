@@ -4,7 +4,6 @@ import Headers from './components/layout/Headers';
 import { darktheme, lighttheme } from './style/theme';
 import GlobalStyle from './style/global-style';
 import { useAppSelector } from './store/hooks';
-import { Container } from 'react-bootstrap';
 import ControlRoute from './router';
 import Footer from './components/layout/Footer';
 import { BrowserRouter } from 'react-router-dom';

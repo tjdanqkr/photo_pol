@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { put, takeEvery, call, takeLatest } from 'redux-saga/effects';
+import { put, takeEvery, call } from 'redux-saga/effects';
 import coronaApi from '../../api/corona';
 import { coronaDataType } from '.';
 

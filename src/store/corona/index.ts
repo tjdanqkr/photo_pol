@@ -25,11 +25,6 @@ const initialState: IState = {
   corona: [],
   message: '',
 };
-interface IRequest {}
-
-interface IResponse {
-  corona: coronaDataType[];
-}
 
 interface IError {
   message: string;

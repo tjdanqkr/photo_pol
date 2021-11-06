@@ -1,5 +1,5 @@
 import { Container, Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { darkMode, lightMode } from '../../store/themeMode';

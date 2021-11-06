@@ -1,7 +1,6 @@
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { darkMode, lightMode } from '../../store/themeMode';
+
 const FooterComponent = styled.div`
   bottom: 0;
   left: 0;

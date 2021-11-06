@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
-import styled, { ThemeProps } from 'styled-components';
+import { useRef } from 'react';
+import styled from 'styled-components';
 import { TableHeaderType } from './TableForm';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
 // import { VariableSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import {
@@ -10,7 +10,6 @@ import {
   List,
   ListRowProps,
   Size,
-  WindowScroller,
 } from 'react-virtualized';
 
 type TableProps = {
@@ -19,15 +18,15 @@ type TableProps = {
   getList: string;
 };
 
-type CellProps = {
-  index: number;
-  style: object;
-};
-type scrollAction = {
-  scrollDirection: 'forward' | 'backward';
-  scrollOffset: number;
-  scrollUpdateWasRequested: boolean;
-};
+// type CellProps = {
+//   index: number;
+//   style: object;
+// };
+// type scrollAction = {
+//   scrollDirection: 'forward' | 'backward';
+//   scrollOffset: number;
+//   scrollUpdateWasRequested: boolean;
+// };
 
 const TableTr = styled.div`
   display: flex;
@@ -67,7 +66,7 @@ const cache = new CellMeasurerCache({
   fixedWidth: true,
 });
 const TableBody = (props: TableProps) => {
-  const { renderList, hedearList, getList } = props;
+  const { renderList, hedearList } = props;
   const listRef = useRef<List | null>(null);
   const Column = ({ index, key, parent, style }: ListRowProps) => {
     const rowData = renderList[index];

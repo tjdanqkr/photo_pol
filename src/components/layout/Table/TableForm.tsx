@@ -1,4 +1,3 @@
-import { VariableSizeGrid as Grid } from 'react-window';
 import TableBody from './TableBody';
 import TableFilter from './TableFilter';
 import TableHeader from './TableHeader';

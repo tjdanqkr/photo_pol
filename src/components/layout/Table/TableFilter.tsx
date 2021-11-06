@@ -1,4 +1,3 @@
-import { VariableSizeGrid as Grid } from 'react-window';
 import { TableHeaderType } from './TableForm';
 
 type FilterProps = {
