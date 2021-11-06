@@ -1,8 +1,17 @@
+import React, { useRef } from 'react';
 import styled, { ThemeProps } from 'styled-components';
-import { VariableSizeList as List } from 'react-window';
 import { TableHeaderType } from './TableForm';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { useMemo } from 'react';
+// import { VariableSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import {
+  CellMeasurer,
+  CellMeasurerCache,
+  List,
+  ListRowProps,
+  Size,
+  WindowScroller,
+} from 'react-virtualized';
 
 type TableProps = {
   renderList: any[];
@@ -12,6 +21,7 @@ type TableProps = {
 
 type CellProps = {
   index: number;
+  style: object;
 };
 type scrollAction = {
   scrollDirection: 'forward' | 'backward';
@@ -25,12 +35,25 @@ const TableTr = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
-  background-color: ${(props) => props.theme.mainBackground};
+  background-color: white;
+  color: black;
+  font-weight: bold;
   &:hover {
     background-color: aliceblue;
   }
-  &: nth-child(odd) {
-    background-color: ${(props) => props.theme.oddBackground};
+`;
+
+const TableTrOdd = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  background-color: #e0e0e0;
+  color: black;
+  font-weight: bold;
+  &:hover {
+    background-color: aliceblue;
   }
 `;
 
@@ -39,48 +62,74 @@ const TableTd = styled.div`
   border-collapse: collapse;
   padding: 5px;
 `;
-
+const cache = new CellMeasurerCache({
+  defaultWidth: 100,
+  fixedWidth: true,
+});
 const TableBody = (props: TableProps) => {
   const { renderList, hedearList, getList } = props;
-
-  const dispatch = useAppDispatch();
-
-  const Column = (cellProps: CellProps) => {
-    const { index } = cellProps;
+  const listRef = useRef<List | null>(null);
+  const Column = ({ index, key, parent, style }: ListRowProps) => {
     const rowData = renderList[index];
 
     return (
-      <TableTr>
-        {hedearList.map((data, i) => {
-          return (
-            <TableTd key={i} style={{ maxWidth: `${data.size}%` }}>
-              {' '}
-              {rowData[data.key]}
-            </TableTd>
-          );
-        })}
-      </TableTr>
+      <CellMeasurer
+        cache={cache}
+        parent={parent}
+        key={key}
+        columnIndex={0}
+        rowIndex={index}
+      >
+        {index % 2 === 0 ? (
+          <TableTr style={style}>
+            {hedearList.map((data, i) => {
+              return (
+                <TableTd key={i} style={{ width: `${data.size}%` }}>
+                  {rowData[data.key]}
+                </TableTd>
+              );
+            })}
+          </TableTr>
+        ) : (
+          <TableTrOdd style={style}>
+            {hedearList.map((data, i) => {
+              return (
+                <TableTd key={i} style={{ width: `${data.size}%` }}>
+                  {rowData[data.key]}
+                </TableTd>
+              );
+            })}
+          </TableTrOdd>
+        )}
+      </CellMeasurer>
     );
   };
 
-  const rowHeights = renderList.map(() => 100);
-
-  const getItemSize = (index: number) => rowHeights[index];
-
-  const onScroll = (props: scrollAction) => {
-    console.log(props.scrollOffset);
-  };
   return (
-    <div>
-      <List
-        height={600}
-        itemSize={getItemSize}
-        itemCount={renderList.length}
-        width={'100%'}
-        onScroll={onScroll}
-      >
-        {Column}
-      </List>
+    <div style={{ height: 1000, overflow: 'auto' }}>
+      {/* <WindowScroller>
+        {({ height, scrollTop, isScrolling, onChildScroll }) => ( */}
+      <AutoSizer>
+        {({ width, height }: Size) => {
+          return (
+            <List
+              ref={listRef}
+              height={height}
+              width={width}
+              // isScrolling={isScrolling}
+              overscanRowCount={0}
+              // onScroll={onChildScroll}
+              // scrollTop={scrollTop}
+              rowCount={renderList.length}
+              rowHeight={cache.rowHeight}
+              rowRenderer={Column}
+              deferredMeasurementCache={cache}
+            ></List>
+          );
+        }}
+      </AutoSizer>
+      {/* )}
+       </WindowScroller> */}
     </div>
   );
 };
