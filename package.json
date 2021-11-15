@@ -69,6 +69,6 @@
   "devDependencies": {
     "gh-pages": "^3.2.3"
   },
-  
+  "homepage": "http://tjdanqkr.github.io/photo_pol/",
   "proxy": "https://tjdanqkr.kro.kr/"
 }
