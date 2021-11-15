@@ -1,0 +1,10 @@
+#Proxy 환경에서 Global Git설정
+
+[https]
+	proxy = https://tjdanqkr.kro.kr    
+	postBuffer = 157286400
+
+#내부 Github접속
+
+[https "http://tjdanqkr.github.io/photo_pol/"]
+	proxy = https://tjdanqkr.kro.kr   
