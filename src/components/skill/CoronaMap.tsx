@@ -94,7 +94,7 @@ function CoronaMap() {
         index,
       });
     },
-    [dispatch],
+    [dispatch, index],
   );
 
   return (
