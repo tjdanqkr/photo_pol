@@ -1,6 +1,5 @@
 import TableBody from './TableBody';
 import TableFilter from './TableFilter';
-import TableHeader from './TableHeader';
 
 type TableProps = {
   renderList: any[];
@@ -16,12 +15,12 @@ export type TableHeaderType = {
   size: number;
   customFuncName?: string;
 };
+
 function TableForm(props: TableProps) {
   const { hedearList, name, renderList, getList } = props;
   return (
     <div>
       <TableFilter hedearList={hedearList} name={name}></TableFilter>
-      <TableHeader hedearList={hedearList}></TableHeader>
       <TableBody
         renderList={renderList}
         hedearList={hedearList}

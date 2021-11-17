@@ -18,14 +18,16 @@ export interface coronaDataType {
 }
 type IState = {
   corona: coronaDataType[];
-  message: string;
+  maxLength: number;
   index: number;
+  message: string;
 };
 // Define the initial state using that type
 const initialState: IState = {
   corona: [],
-  message: '',
+  maxLength: 1000,
   index: 1,
+  message: '',
 };
 
 interface IError {
@@ -36,10 +38,13 @@ export const corona = createSlice({
   name: 'corona',
   initialState,
   reducers: {
-    SUSSESS_CORONA: (state, action: PayloadAction<coronaDataType[]>) => {
-      const concatList = state.corona.concat(action.payload);
+    SUSSESS_CORONA: (state, action: PayloadAction<IState>) => {
+      const concatList = state.corona.concat(action.payload.corona);
+      const maxLength = action.payload.maxLength;
       state.corona = concatList;
-      state.index = state.index + 1000;
+      state.maxLength = maxLength;
+      state.index =
+        maxLength <= state.index + 1000 ? maxLength : state.index + 1000;
     },
     FAIL_CORONA: (state, action: PayloadAction<IError>) => {
       state.message = action.payload.message;

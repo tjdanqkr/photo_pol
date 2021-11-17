@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import TableForm, { TableHeaderType } from '../layout/Table/TableForm';
@@ -14,13 +14,13 @@ function CoronaMap() {
       filterType: 'date',
       custom: false,
     },
-    {
-      key: 'CORONA19_NO',
-      name: '환자번호',
-      size: 5,
-      filterType: 'number',
-      custom: false,
-    },
+    // {
+    //   key: 'CORONA19_NO',
+    //   name: '환자번호',
+    //   size: 5,
+    //   filterType: 'number',
+    //   custom: false,
+    // },
     {
       key: 'CORONA19_COUNTRY',
       name: '국적',
@@ -67,7 +67,7 @@ function CoronaMap() {
     {
       key: 'CORONA19_LEAVE_STATUS',
       name: '상태',
-      size: 5,
+      size: 10,
       filterType: 'string',
       custom: false,
     },
@@ -87,35 +87,22 @@ function CoronaMap() {
     },
   ];
   const dispatch = useAppDispatch();
-  const handleFormSubmit2 = useCallback(
-    (event) => {
-      dispatch({
-        type: 'GET_CORONA',
-        index,
-      });
-    },
-    [dispatch, index],
-  );
+  const getCorona = useCallback(() => {
+    dispatch({
+      type: 'GET_CORONA',
+      index,
+    });
+  }, [dispatch, index]);
+  useEffect(() => {
+    if (corona.length === 0) {
+      getCorona();
+    }
+  });
 
   return (
     <Container fluid="md">
       <Row>
         <Col md={12}>
-          <button
-            onClick={() => {
-              console.log(corona);
-            }}
-          >
-            click log
-          </button>
-
-          <button
-            onClick={(e) => {
-              handleFormSubmit2(e);
-            }}
-          >
-            click log
-          </button>
           <TableForm
             hedearList={coronaHeader}
             name="corona"

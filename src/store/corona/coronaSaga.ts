@@ -7,12 +7,8 @@ type coronaResType = {
   Corona19Status: SuccessType;
 };
 type SuccessType = {
-  list_total_count: number;
-  RESULT: {
-    CODE: string;
-    MESSAGE: string;
-  };
-  row: coronaDataType[];
+  corona: coronaDataType[];
+  maxLength: number;
 };
 type actionType = {
   index: number;
@@ -28,7 +24,7 @@ function* callCoronaApi(action: actionType) {
 
     yield put({
       type: 'corona/SUSSESS_CORONA',
-      payload: corona.data.Corona19Status.row,
+      payload: corona.data,
     });
   } catch (e) {
     if (e instanceof Error) {
