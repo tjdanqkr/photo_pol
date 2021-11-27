@@ -5,9 +5,15 @@ import CoronaMap from '../components/skill/CoronaMap';
 
 const ControlRoute: React.FC = () => (
   <Switch>
-    <Route exact path="/" component={Home} />
-    <Route path="/skill/1" component={CoronaMap}></Route>
-    <Route path="*" component={Home} />
+    <Route exact path="/">
+      <Home />
+    </Route>
+    <Route path="/skill/1">
+      <CoronaMap></CoronaMap>
+    </Route>
+    <Route path="*">
+      <Home />
+    </Route>
   </Switch>
 );
 export default ControlRoute;

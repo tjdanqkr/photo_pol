@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootSaga from './saga';
 import themeMode from './themeMode';
 import userLog from './corona';
+import toggle from './toggle';
 const isDev = process.env.NODE_ENV !== 'production';
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,6 +12,7 @@ const createStore = () => {
     reducer: {
       theme: themeMode,
       corona: userLog,
+      toggle: toggle,
     },
     devTools: isDev,
     middleware: [sagaMiddleware],
