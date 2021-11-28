@@ -89,9 +89,14 @@ const ToggleItemTemplate = styled.div`
   color: black;
   transform: translate(0, -3em);
   z-index: 0;
-  overflow-y: scroll;
+
   padding: 2em;
   padding-top: 3em;
+`;
+const ToggleScroll = styled.div`
+  overflow-y: scroll;
+  max-height: 15em;
+
   &::-webkit-scrollbar {
     /* 스크롤바 막대 너비 설정 */
     width: 6px;
@@ -105,6 +110,10 @@ const ToggleItemTemplate = styled.div`
   &::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0);
   }
+`;
+const ToggleItem = styled.div`
+  color: black;
+  text-align: center;
 `;
 
 type content = {
@@ -209,17 +218,19 @@ function Home() {
                     </div>
                     {data.open ? (
                       <ToggleItemTemplate>
-                        {data.content.map((con, i) => (
-                          <div key={i} style={{ textAlign: "center" }}>
-                            <img
-                              src={`${process.env.PUBLIC_URL}/${con.img}`}
-                              alt={con.alt}
-                              style={{ width: "100%" }}
-                            ></img>
-                            <b>{`<${con.alt}>`}</b>
-                            {data.content.length !== i + 1 ? <hr></hr> : null}
-                          </div>
-                        ))}
+                        <ToggleScroll>
+                          {data.content.map((con, i) => (
+                            <ToggleItem key={i} style={{ textAlign: "center" }}>
+                              <img
+                                src={`${process.env.PUBLIC_URL}/${con.img}`}
+                                alt={con.alt}
+                                style={{ width: "100%" }}
+                              ></img>
+                              <b>{`<${con.alt}>`}</b>
+                              {data.content.length !== i + 1 ? <hr></hr> : null}
+                            </ToggleItem>
+                          ))}
+                        </ToggleScroll>
                       </ToggleItemTemplate>
                     ) : null}
                   </Col>
