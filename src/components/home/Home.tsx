@@ -130,13 +130,6 @@ function Home() {
     },
   ];
 
-  // const [toggleState, setToggleState] = toggle;
-  // const onClickToggle = (key: number) => {
-  //   let toggleStateCopy = toggleState;
-  //   toggleStateCopy[key].open = !toggleStateCopy[key].open;
-  //   setToggleState(toggleStateCopy);
-  //   console.log(toggleState);
-  // };
 
   return (
     <>
