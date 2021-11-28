@@ -1,8 +1,9 @@
-import { Col, Row, Container } from 'react-bootstrap';
-import styled from 'styled-components';
-import logosvg from '../../img/logo.svg';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { onClickToggle } from '../../store/toggle';
+import { Col, Row, Container } from "react-bootstrap";
+import styled from "styled-components";
+import logosvg from "../../img/logo.svg";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { onClickToggle } from "../../store/toggle";
+import "./Home.css";
 const Title = styled.div`
   background-color: #212529;
   color: white;
@@ -78,29 +79,41 @@ const ToggleArrow = styled.div`
   transition: all ease 1s;
 `;
 
-const ToggleBox = styled.div`
-  background: #f6f6f6;
-  border-radius: 2em;
-  padding: 10px;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: space-around;
-  margin: 20px;
-  cursor: pointer;
-  color: black;
-  box-shadow: 12px 12px 2px 1px rgb(0 0 0 / 20%);
-  z-index: 10;
-  position: relative;
-`;
 const ToggleItemTemplate = styled.div`
   border-radius: 0 0 2em 2em;
-  background-color: #7d7d7d;
+  background-color: #bfbfbf;
   margin: 20px;
   position: relative;
-  height: 200px;
+  min-height: 15em;
+  max-height: 25em;
+  color: black;
   transform: translate(0, -3em);
   z-index: 0;
+
+  padding: 2em;
+  padding-top: 3em;
+`;
+const ToggleScroll = styled.div`
+  overflow-y: scroll;
+  max-height: 15em;
+
+  &::-webkit-scrollbar {
+    /* 스크롤바 막대 너비 설정 */
+    width: 6px;
+  } /* 스크롤바 막대 설정*/
+  &::-webkit-scrollbar-thumb {
+    /* 스크롤바 막대 높이 설정 */
+    height: 17%;
+    background-color: #7d7d7d; /* 스크롤바 둥글게 설정 */
+    border-radius: 10px;
+  } /* 스크롤바 뒷 배경 설정*/
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
+`;
+const ToggleItem = styled.div`
+  color: black;
+  text-align: center;
 `;
 
 type content = {
@@ -113,20 +126,20 @@ function Home() {
   const dispatch = useAppDispatch();
   const contentList: content = [
     {
-      title: '1111',
-      sub: '1111',
+      title: "1111",
+      sub: "1111",
     },
     {
-      title: '2222',
-      sub: '2222',
+      title: "2222",
+      sub: "2222",
     },
     {
-      title: '3333',
-      sub: '3333',
+      title: "3333",
+      sub: "3333",
     },
     {
-      title: '4444',
-      sub: '4444',
+      title: "4444",
+      sub: "4444",
     },
   ];
 
@@ -182,19 +195,36 @@ function Home() {
               <Row>
                 {toggle.map((data, i) => (
                   <Col md={6} key={i}>
-                    <ToggleBox onClick={() => dispatch(onClickToggle(i))}>
+                    <div
+                      className={data.open ? "ToggleBoxActive" : "ToggleBox"}
+                      onClick={() => dispatch(onClickToggle(i))}
+                    >
                       <img
                         src={`${process.env.PUBLIC_URL}/${data.img}`}
-                        style={{ width: '100px', height: '100px' }}
+                        style={{ width: "100px", height: "100px" }}
                         alt={data.alt}
                       ></img>
                       <h3>
                         <b>{data.alt}</b>
                       </h3>
                       <ToggleArrow>{data.open ? `▲` : `▼`}</ToggleArrow>
-                    </ToggleBox>
+                    </div>
                     {data.open ? (
-                      <ToggleItemTemplate>'ㅋㅋ'</ToggleItemTemplate>
+                      <ToggleItemTemplate>
+                        <ToggleScroll>
+                          {data.content.map((con, i) => (
+                            <ToggleItem key={i} style={{ textAlign: "center" }}>
+                              <img
+                                src={`${process.env.PUBLIC_URL}/${con.img}`}
+                                alt={con.alt}
+                                style={{ width: "100%" }}
+                              ></img>
+                              <b>{`<${con.alt}>`}</b>
+                              {data.content.length !== i + 1 ? <hr></hr> : null}
+                            </ToggleItem>
+                          ))}
+                        </ToggleScroll>
+                      </ToggleItemTemplate>
                     ) : null}
                   </Col>
                 ))}
