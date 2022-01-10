@@ -13,12 +13,12 @@ function LottoQrNumber() {
   const handleScan = (data: any) => {
     if (data) {
       console.log(data);
-      setData(data);
+      setData(data.toString());
     }
   };
   const handleError = (err: any) => {
     console.error(err);
-    setError(err);
+    setError(err.toString());
   };
 
   return (
