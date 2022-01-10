@@ -36,7 +36,9 @@ function Headers() {
                 <NavDropdown.Item as={Link} to="/skill/1">
                   corona
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/skill/2">Lotto</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/skill/2">
+                  Lotto
+                </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link as={Link} to="/userlog">
                 <strong>self-introduction</strong>
