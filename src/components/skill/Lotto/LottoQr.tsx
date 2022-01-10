@@ -1,13 +1,15 @@
+import Button from '@restart/ui/esm/Button';
 import { useCallback, useState } from 'react';
 import { Col, Toast } from 'react-bootstrap';
 import QrReader from 'react-qr-reader';
-import { useAppDispatch } from '../../../store/hooks';
-import { LOTTOADD } from '../../../store/lotto';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { LOTTOADD, LOTTOTOASTCLOSE } from '../../../store/lotto';
 
 function LottoQr() {
   const dispatch = useAppDispatch();
+  const toast = useAppSelector((state) => state.lotto.toast);
   const [domain, setDomain] = useState<string | null>();
-  const [show, setShow] = useState<boolean>(false);
+
   const handleError = (err: any) => {
     console.error(err);
   };
@@ -28,7 +30,6 @@ function LottoQr() {
       const numberList = queryData.slice(1);
       const myNumberList = await myNumberListFunc(numberList);
       dispatch(LOTTOADD({ round, myLottoList: myNumberList }));
-      setShow(true);
     } catch (err: any) {
       console.error(err);
     }
@@ -42,10 +43,21 @@ function LottoQr() {
       return Numbers;
     });
   };
-
+  const setClose = () => {
+    dispatch(LOTTOTOASTCLOSE());
+  };
   return (
     <>
-      <Toast onClose={() => setShow(false)} show={show} delay={1500} autohide>
+      <Button
+        onClick={() =>
+          handleScan(
+            'https://m.dhlottery.co.kr/qr.do?method=winQr&v=0997q071524404245q151718273144q111215232740q031114212226q2328304042441785483554',
+          )
+        }
+      >
+        dd
+      </Button>
+      <Toast onClose={setClose} show={toast} delay={1500} autohide>
         <Toast.Body>추가되었습니다!</Toast.Body>
       </Toast>
       <QrReader

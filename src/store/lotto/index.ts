@@ -19,6 +19,7 @@ interface LottoState {
   statisticsAppDesc: statisticsType[];
   activeKey: number[];
   camera: boolean;
+  toast: boolean;
 }
 
 // Define the initial state using that type
@@ -29,6 +30,7 @@ const initialState: LottoState = {
   statisticsAppDesc: [],
   activeKey: [],
   camera: true,
+  toast: false,
 };
 
 interface IPayLoadLottoState {
@@ -51,6 +53,7 @@ export const lottoSlice = createSlice({
       const { myLottoList, round } = action.payload;
       const obj = { round, myLottoList };
       state.lottoList.push(obj);
+      state.toast = true;
     },
     LOTTOREMOVE: (state, action: PayloadAction<IPayLoadRemoveState>) => {
       const { activeKey, lottoList } = state;
@@ -95,6 +98,9 @@ export const lottoSlice = createSlice({
     LOTTOCAMERA: (state) => {
       state.camera = !state.camera;
     },
+    LOTTOTOASTCLOSE: (state) => {
+      state.toast = false;
+    },
   },
 });
 
@@ -104,6 +110,7 @@ export const {
   LOTTOANALYZE,
   LOTTOACTIVEKEY,
   LOTTOCAMERA,
+  LOTTOTOASTCLOSE,
 } = lottoSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
