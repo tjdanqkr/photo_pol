@@ -34,11 +34,9 @@ function Headers() {
               <Nav.Link as={Link} to="/userlog"></Nav.Link>
               <NavDropdown title="skill" id="collasible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/skill/1">
-                  userlog
+                  corona
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
+                <NavDropdown.Item href="/skill/2">Lotto</NavDropdown.Item>
               </NavDropdown>
               <Nav.Link as={Link} to="/userlog">
                 <strong>self-introduction</strong>

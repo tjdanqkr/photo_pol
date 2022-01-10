@@ -4,6 +4,7 @@ import rootSaga from './saga';
 import themeMode from './themeMode';
 import userLog from './corona';
 import toggle from './toggle';
+import lotto from './lotto';
 const isDev = process.env.NODE_ENV !== 'production';
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,6 +14,7 @@ const createStore = () => {
       theme: themeMode,
       corona: userLog,
       toggle: toggle,
+      lotto: lotto,
     },
     devTools: isDev,
     middleware: [sagaMiddleware],
