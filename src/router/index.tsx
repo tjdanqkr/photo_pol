@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import Home from '../components/home/Home';
-import CoronaMap from '../components/skill/CoronaMap';
-import LottoQrNumber from '../components/skill/LottoQrNumber';
+import CoronaMap from '../components/skill/Corona/CoronaMap';
+import LottoQrNumber from '../components/skill/Lotto/LottoTemplate';
 
 const ControlRoute: React.FC = () => (
   <Switch>

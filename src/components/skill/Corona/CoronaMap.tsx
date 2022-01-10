@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import TableForm, { TableHeaderType } from '../layout/Table/TableForm';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import TableForm, { TableHeaderType } from '../../layout/Table/TableForm';
 
 function CoronaMap() {
   const corona = useAppSelector((state) => state.corona.corona);
