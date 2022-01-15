@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../store';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "../../store";
 
 // Define a type for the slice state
 
@@ -20,6 +20,7 @@ interface LottoState {
   activeKey: number[];
   camera: boolean;
   toast: boolean;
+  recommendList: number[][];
 }
 
 // Define the initial state using that type
@@ -31,6 +32,7 @@ const initialState: LottoState = {
   activeKey: [],
   camera: true,
   toast: false,
+  recommendList: [],
 };
 
 interface IPayLoadLottoState {
@@ -39,14 +41,14 @@ interface IPayLoadLottoState {
 }
 interface IPayLoadActiveKeyState {
   key: number;
-  type: 'open' | 'close';
+  type: "open" | "close";
 }
 interface IPayLoadRemoveState {
   key: number;
 }
 
 export const lottoSlice = createSlice({
-  name: 'lotto',
+  name: "lotto",
   initialState,
   reducers: {
     LOTTOADD: (state, action: PayloadAction<IPayLoadLottoState>) => {
@@ -71,7 +73,7 @@ export const lottoSlice = createSlice({
       lottoList.forEach((list) => {
         list.myLottoList.flat().forEach((num) => {
           const findI = statisticsList.findIndex(
-            (statistics) => statistics.num === num,
+            (statistics) => statistics.num === num
           );
           findI > -1
             ? statisticsList[findI].appearance++
@@ -80,7 +82,7 @@ export const lottoSlice = createSlice({
       });
       const NumDesc = statisticsList.sort((a, b) => a.num - b.num);
       const AppDesc = statisticsList.sort(
-        (a, b) => b.appearance - a.appearance,
+        (a, b) => b.appearance - a.appearance
       );
       state.statisticsNumDesc = NumDesc;
       state.statisticsAppDesc = AppDesc;
@@ -89,7 +91,7 @@ export const lottoSlice = createSlice({
       let { activeKey } = state;
       const { key, type } = action.payload;
 
-      if (type === 'close') {
+      if (type === "close") {
         state.activeKey = activeKey.filter((data) => data !== key);
       } else {
         activeKey.push(key);
@@ -101,9 +103,55 @@ export const lottoSlice = createSlice({
     LOTTOTOASTCLOSE: (state) => {
       state.toast = false;
     },
+    LOTTORECOMMEND: (state) => {
+      const { lottoList, statisticsNumDesc, statisticsAppDesc } = state;
+      // const topList = statisticsNumDesc.map(data).appearance;
+    },
   },
 });
 
+const makeTopList = (statisticsNumDesc: statisticsType[]) => {
+  const maxCount = 5;
+  const maxLottoNumber = 6;
+  let count = 0;
+  let countAppearance = statisticsNumDesc[0].appearance;
+  let top5List = [];
+  while (top5List.length < maxLottoNumber) {
+    const countNum = statisticsNumDesc.filter(
+      (data) => countAppearance === data.appearance
+    );
+    count = +countNum.length;
+
+    if (count <= maxCount) {
+      countAppearance--;
+      countNum.forEach((data) => {
+        top5List.push(data.num);
+      });
+    } else {
+      const popNums = 5 - top5List.length;
+      for (let i = 0; i < popNums; i++) {
+        const randomIndex = Math.floor(Math.random() * countNum.length);
+        let selectNum = countNum[randomIndex].num;
+        top5List.filter((data) => selectNum === data).length > 0
+          ? i--
+          : top5List.push(selectNum);
+      }
+    }
+  }
+};
+
+const deduplicationFunc = (state: RootState, testList: number[]) => {
+  const { lottoList } = state.lotto;
+  let pass = true;
+  lottoList.forEach(
+    (data) =>
+      (pass =
+        data.myLottoList.filter((myLotto) => myLotto === testList).length > 0
+          ? false
+          : pass)
+  );
+  return pass;
+};
 export const {
   LOTTOADD,
   LOTTOREMOVE,
