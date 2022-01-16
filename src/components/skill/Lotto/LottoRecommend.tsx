@@ -17,10 +17,15 @@ const Rotate = styled.div`
 `;
 function LottoRecommend() {
   const recommendList = useAppSelector((state) => state.lotto.recommendList);
+  const statisticsNumDesc = useAppSelector(
+    (state) => state.lotto.statisticsNumDesc,
+  );
 
   const dispatch = useAppDispatch();
   const onClickRecommend = () => {
-    dispatch(LOTTORECOMMEND());
+    if (statisticsNumDesc.length > 10) {
+      dispatch(LOTTORECOMMEND());
+    }
   };
   return (
     <>
@@ -35,10 +40,10 @@ function LottoRecommend() {
 
       <Table striped bordered hover size="sm">
         <tbody>
-          {recommendList.map((data) => (
-            <tr>
-              {data.map((number) => (
-                <td>{number}</td>
+          {recommendList.map((data, i) => (
+            <tr key={i}>
+              {data.map((number, j) => (
+                <td key={j}>{number}</td>
               ))}
             </tr>
           ))}

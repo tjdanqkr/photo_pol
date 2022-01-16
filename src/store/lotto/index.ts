@@ -92,8 +92,12 @@ export const lottoSlice = createSlice({
       );
       state.statisticsNumDesc = NumDesc;
       state.statisticsAppDesc = AppDesc;
-      state.top5List = makeTop5List(NumDesc);
-      state.notExistList = makeNotExistList(AppDesc);
+      const top5List = makeTop5List(NumDesc);
+
+      state.top5List = top5List;
+      const notExistList = makeNotExistList(AppDesc);
+
+      state.notExistList = notExistList;
     },
     LOTTOACTIVEKEY: (state, action: PayloadAction<IPayLoadActiveKeyState>) => {
       let { activeKey } = state;
@@ -113,7 +117,7 @@ export const lottoSlice = createSlice({
     },
     LOTTORECOMMEND: (state) => {
       const { lottoList, statisticsNumDesc, notExistList, top5List } = state;
-      let check = false;
+      let check = true;
       let checkList: number[][] = [];
       while (check) {
         const topRandomNumber = makeTopRandomNumber(lottoList, top5List);
@@ -134,6 +138,7 @@ export const lottoSlice = createSlice({
           randomNumber1,
           randomNumber2,
         ];
+
         const checkArr = checkList.map(
           (data) =>
             checkList.filter(
@@ -154,7 +159,7 @@ const makeTop5List = (statisticsNumDesc: statisticsType[]) => {
 
   let countAppearance = statisticsNumDesc[0].appearance;
   let top5List: number[] = [];
-  while (top5List.length > maxCount) {
+  while (top5List.length < maxCount) {
     const countNum = statisticsNumDesc.filter(
       (data) => countAppearance === data.appearance,
     );
@@ -167,9 +172,17 @@ const makeTop5List = (statisticsNumDesc: statisticsType[]) => {
   return top5List;
 };
 const makeNotExistList = (statisticsAppDesc: statisticsType[]) => {
-  return statisticsAppDesc
-    .filter((data) => data.appearance === 0)
+  const arr = new Array(45).fill(0);
+  const initLottoNumArr = arr.map((data, i) => i + 1);
+  const existArr = statisticsAppDesc
+    .filter((data) => data.appearance !== 0)
     .map((data) => data.num);
+
+  return initLottoNumArr.filter((Idata) => {
+    let check = existArr.filter((Edata) => Edata === Idata).length === 0;
+
+    return check;
+  });
 };
 
 const makeTopRandomNumber = (lottoList: myLottoList[], top5List: number[]) => {
@@ -177,7 +190,7 @@ const makeTopRandomNumber = (lottoList: myLottoList[], top5List: number[]) => {
   const maxLength = 6;
   const maxNumber = 45;
   const useUnit = Math.floor(listLength * Math.random() + 1);
-  let pass = false;
+  let pass = true;
   let arrs: number[] = [];
   while (pass) {
     arrs = [];
@@ -194,7 +207,7 @@ const makeTopRandomNumber = (lottoList: myLottoList[], top5List: number[]) => {
         : arrs.push(choiseNumber);
     }
     arrs.sort((a, b) => a - b);
-    pass = deduplicationFunc(lottoList, arrs);
+    pass = !deduplicationFunc(lottoList, arrs);
   }
   return arrs;
 };
@@ -206,7 +219,7 @@ const makeExistRandomNumber = (
   const maxLength = 6;
   const maxNumber = 45;
   const useUnit = Math.floor(listLength * Math.random() + 1);
-  let pass = false;
+  let pass = true;
   let arrs: number[] = [];
   while (pass) {
     arrs = [];
@@ -223,7 +236,7 @@ const makeExistRandomNumber = (
         : arrs.push(choiseNumber);
     }
     arrs.sort((a, b) => a - b);
-    pass = deduplicationFunc(lottoList, arrs);
+    pass = !deduplicationFunc(lottoList, arrs);
   }
   return arrs;
 };
@@ -235,7 +248,7 @@ const makeNotExistRandomNumber = (
   const maxLength = 6;
   const maxNumber = 45;
   const useUnit = Math.floor(listLength * Math.random() + 1);
-  let pass = false;
+  let pass = true;
   let arrs: number[] = [];
   while (pass) {
     arrs = [];
@@ -252,14 +265,14 @@ const makeNotExistRandomNumber = (
         : arrs.push(choiseNumber);
     }
     arrs.sort((a, b) => a - b);
-    pass = deduplicationFunc(lottoList, arrs);
+    pass = !deduplicationFunc(lottoList, arrs);
   }
   return arrs;
 };
 const makeRandomNumber = (lottoList: myLottoList[]) => {
   const maxLength = 6;
   const maxNumber = 45;
-  let pass = false;
+  let pass = true;
   let arrs: number[] = [];
   while (pass) {
     arrs = [];
@@ -271,14 +284,14 @@ const makeRandomNumber = (lottoList: myLottoList[]) => {
         : arrs.push(choiseNumber);
     }
     arrs.sort((a, b) => a - b);
-    pass = deduplicationFunc(lottoList, arrs);
+    pass = !deduplicationFunc(lottoList, arrs);
   }
   return arrs;
 };
 
 const deduplicationFunc = (lottoList: myLottoList[], testList: number[]) => {
   let pass = true;
-  console.log(testList);
+
   lottoList.forEach(
     (data) =>
       (pass =

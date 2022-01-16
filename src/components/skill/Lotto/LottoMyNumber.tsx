@@ -1,6 +1,10 @@
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { LOTTOACTIVEKEY, LOTTOREMOVE } from '../../../store/lotto';
+import {
+  LOTTOACTIVEKEY,
+  LOTTOANALYZE,
+  LOTTOREMOVE,
+} from '../../../store/lotto';
 import styled from 'styled-components';
 import { GoDiffRemoved } from 'react-icons/go';
 
@@ -61,58 +65,68 @@ function LottoMyNumber() {
   const removeHandler = (key: number) => {
     dispatch(LOTTOREMOVE({ key }));
   };
+  const analyzeHandler = () => {
+    if (lottoList.length > 2) dispatch(LOTTOANALYZE());
+  };
 
   return (
-    <Accordion>
-      {lottoList.map((lotto, i) => (
-        <AccordionForm key={i}>
-          <AccordionHeader
-            unselectable={
-              activeKey.find((data) => data === i) !== undefined ? 'on' : 'off'
-            }
-          >
-            <AccordionHeaderButton
-              onClick={() =>
-                activeKeyHandler(
-                  i,
-                  activeKey.find((data) => data === i) !== undefined
-                    ? 'close'
-                    : 'open',
-                )
-              }
+    <>
+      <Button onClick={analyzeHandler} variant="outline-secondary">
+        analyze
+      </Button>
+      <Accordion>
+        {lottoList.map((lotto, i) => (
+          <AccordionForm key={i}>
+            <AccordionHeader
               unselectable={
                 activeKey.find((data) => data === i) !== undefined
                   ? 'on'
                   : 'off'
               }
-            >{`${lotto.round} 회차(${i + 1})\n ${
-              lotto.url
-            }`}</AccordionHeaderButton>
-            <AccordionRemoveButton onClick={() => removeHandler(i)}>
-              <GoDiffRemoved></GoDiffRemoved>
-            </AccordionRemoveButton>
-          </AccordionHeader>
-          {activeKey.find((data) => data === i) !== undefined ? (
-            <AccordionBody>
-              <Table striped bordered hover size="sm">
-                <thead></thead>
-                <tbody>
-                  {lotto.myLottoList.map((numbers, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td></td>
-                      {numbers.map((number) => (
-                        <td key={number}>{number}</td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </AccordionBody>
-          ) : null}
-        </AccordionForm>
-      ))}
-    </Accordion>
+            >
+              <AccordionHeaderButton
+                onClick={() =>
+                  activeKeyHandler(
+                    i,
+                    activeKey.find((data) => data === i) !== undefined
+                      ? 'close'
+                      : 'open',
+                  )
+                }
+                unselectable={
+                  activeKey.find((data) => data === i) !== undefined
+                    ? 'on'
+                    : 'off'
+                }
+              >{`${lotto.round} 회차(${i + 1})\n ${
+                lotto.url
+              }`}</AccordionHeaderButton>
+              <AccordionRemoveButton onClick={() => removeHandler(i)}>
+                <GoDiffRemoved></GoDiffRemoved>
+              </AccordionRemoveButton>
+            </AccordionHeader>
+            {activeKey.find((data) => data === i) !== undefined ? (
+              <AccordionBody>
+                <Table striped bordered hover size="sm">
+                  <thead></thead>
+                  <tbody>
+                    {lotto.myLottoList.map((numbers, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td></td>
+                        {numbers.map((number) => (
+                          <td key={number}>{number}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </AccordionBody>
+            ) : null}
+          </AccordionForm>
+        ))}
+      </Accordion>
+    </>
   );
 }
 export default LottoMyNumber;
