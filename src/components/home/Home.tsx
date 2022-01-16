@@ -96,7 +96,6 @@ const ToggleItemTemplate = styled.div`
 const ToggleScroll = styled.div`
   overflow-y: scroll;
   max-height: 15em;
-
   &::-webkit-scrollbar {
     /* 스크롤바 막대 너비 설정 */
     width: 6px;

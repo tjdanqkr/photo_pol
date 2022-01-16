@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Col, Row, Container, Table, Button, Form } from 'react-bootstrap';
-import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { LOTTOADD, LOTTOANALYZE, LOTTOCAMERA } from '../../../store/lotto';
+import { useCallback, useEffect, useState } from "react";
+import { Col, Row, Container, Table, Button, Form } from "react-bootstrap";
+import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { LOTTOADD, LOTTOANALYZE, LOTTOCAMERA } from "../../../store/lotto";
 const BoxForm = styled.div`
   width: 100%;
   overflow: scroll;
@@ -10,10 +10,10 @@ const BoxForm = styled.div`
 
 function LottoAnalyze() {
   const statisticsNumDesc = useAppSelector(
-    (state) => state.lotto.statisticsNumDesc,
+    (state) => state.lotto.statisticsNumDesc
   );
   const statisticsAppDesc = useAppSelector(
-    (state) => state.lotto.statisticsAppDesc,
+    (state) => state.lotto.statisticsAppDesc
   );
   const suggestion = useAppSelector((state) => state.lotto.suggestion);
   const dispatch = useAppDispatch();
@@ -46,7 +46,7 @@ function LottoAnalyze() {
           <tr>
             {numberList.map((num) => {
               const findObj = statisticsNumDesc.find(
-                (data) => data.num === num,
+                (data) => data.num === num
               );
               const appearance = findObj?.appearance ? findObj?.appearance : 0;
               return <td key={num}>{appearance}</td>;
