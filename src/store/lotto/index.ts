@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../../store';
 
 // Define a type for the slice state
 
@@ -21,6 +21,8 @@ interface LottoState {
   camera: boolean;
   toast: boolean;
   recommendList: number[][];
+  top5List: number[];
+  notExistList: number[];
 }
 
 // Define the initial state using that type
@@ -33,6 +35,8 @@ const initialState: LottoState = {
   camera: true,
   toast: false,
   recommendList: [],
+  top5List: [],
+  notExistList: [],
 };
 
 interface IPayLoadLottoState {
@@ -41,14 +45,14 @@ interface IPayLoadLottoState {
 }
 interface IPayLoadActiveKeyState {
   key: number;
-  type: "open" | "close";
+  type: 'open' | 'close';
 }
 interface IPayLoadRemoveState {
   key: number;
 }
 
 export const lottoSlice = createSlice({
-  name: "lotto",
+  name: 'lotto',
   initialState,
   reducers: {
     LOTTOADD: (state, action: PayloadAction<IPayLoadLottoState>) => {
@@ -73,7 +77,7 @@ export const lottoSlice = createSlice({
       lottoList.forEach((list) => {
         list.myLottoList.flat().forEach((num) => {
           const findI = statisticsList.findIndex(
-            (statistics) => statistics.num === num
+            (statistics) => statistics.num === num,
           );
           findI > -1
             ? statisticsList[findI].appearance++
@@ -82,16 +86,18 @@ export const lottoSlice = createSlice({
       });
       const NumDesc = statisticsList.sort((a, b) => a.num - b.num);
       const AppDesc = statisticsList.sort(
-        (a, b) => b.appearance - a.appearance
+        (a, b) => b.appearance - a.appearance,
       );
       state.statisticsNumDesc = NumDesc;
       state.statisticsAppDesc = AppDesc;
+      state.top5List = makeTop5List(NumDesc);
+      state.notExistList = makeNotExistList(AppDesc);
     },
     LOTTOACTIVEKEY: (state, action: PayloadAction<IPayLoadActiveKeyState>) => {
       let { activeKey } = state;
       const { key, type } = action.payload;
 
-      if (type === "close") {
+      if (type === 'close') {
         state.activeKey = activeKey.filter((data) => data !== key);
       } else {
         activeKey.push(key);
@@ -104,51 +110,179 @@ export const lottoSlice = createSlice({
       state.toast = false;
     },
     LOTTORECOMMEND: (state) => {
-      const { lottoList, statisticsNumDesc, statisticsAppDesc } = state;
-      // const topList = statisticsNumDesc.map(data).appearance;
+      const { lottoList, statisticsNumDesc, notExistList, top5List } = state;
+      let check = false;
+      let checkList: number[][] = [];
+      while (check) {
+        const topRandomNumber = makeTopRandomNumber(lottoList, top5List);
+        const existRandomNumber = makeExistRandomNumber(
+          lottoList,
+          statisticsNumDesc,
+        );
+        const notExistRandomNumber = makeNotExistRandomNumber(
+          lottoList,
+          notExistList,
+        );
+        const randomNumber1 = makeRandomNumber(lottoList);
+        const randomNumber2 = makeRandomNumber(lottoList);
+        checkList = [
+          topRandomNumber,
+          existRandomNumber,
+          notExistRandomNumber,
+          randomNumber1,
+          randomNumber2,
+        ];
+        const checkArr = checkList.map(
+          (data) =>
+            checkList.filter(
+              (filterdata) =>
+                JSON.stringify(data) === JSON.stringify(filterdata),
+            ).length > 1,
+        );
+        check = checkArr.some((data) => data === true);
+      }
+      state.recommendList = checkList;
+      //final check
     },
   },
 });
 
-const makeTopList = (statisticsNumDesc: statisticsType[]) => {
+const makeTop5List = (statisticsNumDesc: statisticsType[]) => {
   const maxCount = 5;
-  const maxLottoNumber = 6;
-  let count = 0;
-  let countAppearance = statisticsNumDesc[0].appearance;
-  let top5List = [];
-  while (top5List.length < maxLottoNumber) {
-    const countNum = statisticsNumDesc.filter(
-      (data) => countAppearance === data.appearance
-    );
-    count = +countNum.length;
 
-    if (count <= maxCount) {
-      countAppearance--;
-      countNum.forEach((data) => {
-        top5List.push(data.num);
-      });
-    } else {
-      const popNums = 5 - top5List.length;
-      for (let i = 0; i < popNums; i++) {
-        const randomIndex = Math.floor(Math.random() * countNum.length);
-        let selectNum = countNum[randomIndex].num;
-        top5List.filter((data) => selectNum === data).length > 0
-          ? i--
-          : top5List.push(selectNum);
-      }
-    }
+  let countAppearance = statisticsNumDesc[0].appearance;
+  let top5List: number[] = [];
+  while (top5List.length > maxCount) {
+    const countNum = statisticsNumDesc.filter(
+      (data) => countAppearance === data.appearance,
+    );
+
+    countAppearance--;
+    countNum.forEach((data) => {
+      top5List.push(data.num);
+    });
   }
+  return top5List;
+};
+const makeNotExistList = (statisticsAppDesc: statisticsType[]) => {
+  return statisticsAppDesc
+    .filter((data) => data.appearance === 0)
+    .map((data) => data.num);
 };
 
-const deduplicationFunc = (state: RootState, testList: number[]) => {
-  const { lottoList } = state.lotto;
+const makeTopRandomNumber = (lottoList: myLottoList[], top5List: number[]) => {
+  const listLength = top5List.length;
+  const maxLength = 6;
+  const maxNumber = 45;
+  const useUnit = Math.floor(listLength * Math.random() + 1);
+  let pass = false;
+  let arrs: number[] = [];
+  while (pass) {
+    arrs = [];
+    for (let i = 0; i < maxLength; i++) {
+      let choiseNumber = 0;
+      const randomPopNumber = Math.floor(listLength * Math.random());
+      if (i < useUnit) {
+        choiseNumber = top5List[randomPopNumber];
+      } else {
+        choiseNumber = Math.floor(maxNumber * Math.random() + 1);
+      }
+      arrs.some((data) => data === choiseNumber)
+        ? i--
+        : arrs.push(choiseNumber);
+    }
+    arrs.sort((a, b) => a - b);
+    pass = deduplicationFunc(lottoList, arrs);
+  }
+  return arrs;
+};
+const makeExistRandomNumber = (
+  lottoList: myLottoList[],
+  statisticsNumDesc: statisticsType[],
+) => {
+  const listLength = statisticsNumDesc.length;
+  const maxLength = 6;
+  const maxNumber = 45;
+  const useUnit = Math.floor(listLength * Math.random() + 1);
+  let pass = false;
+  let arrs: number[] = [];
+  while (pass) {
+    arrs = [];
+    for (let i = 0; i < maxLength; i++) {
+      let choiseNumber = 0;
+      const randomPopNumber = Math.floor(listLength * Math.random());
+      if (i < useUnit) {
+        choiseNumber = statisticsNumDesc[randomPopNumber].num;
+      } else {
+        choiseNumber = Math.floor(maxNumber * Math.random() + 1);
+      }
+      arrs.some((data) => data === choiseNumber)
+        ? i--
+        : arrs.push(choiseNumber);
+    }
+    arrs.sort((a, b) => a - b);
+    pass = deduplicationFunc(lottoList, arrs);
+  }
+  return arrs;
+};
+const makeNotExistRandomNumber = (
+  lottoList: myLottoList[],
+  notExistList: number[],
+) => {
+  const listLength = notExistList.length;
+  const maxLength = 6;
+  const maxNumber = 45;
+  const useUnit = Math.floor(listLength * Math.random() + 1);
+  let pass = false;
+  let arrs: number[] = [];
+  while (pass) {
+    arrs = [];
+    for (let i = 0; i < maxLength; i++) {
+      let choiseNumber = 0;
+      const randomPopNumber = Math.floor(listLength * Math.random());
+      if (i < useUnit) {
+        choiseNumber = notExistList[randomPopNumber];
+      } else {
+        choiseNumber = Math.floor(maxNumber * Math.random() + 1);
+      }
+      arrs.some((data) => data === choiseNumber)
+        ? i--
+        : arrs.push(choiseNumber);
+    }
+    arrs.sort((a, b) => a - b);
+    pass = deduplicationFunc(lottoList, arrs);
+  }
+  return arrs;
+};
+const makeRandomNumber = (lottoList: myLottoList[]) => {
+  const maxLength = 6;
+  const maxNumber = 45;
+  let pass = false;
+  let arrs: number[] = [];
+  while (pass) {
+    arrs = [];
+    for (let i = 0; i < maxLength; i++) {
+      let choiseNumber = 0;
+      choiseNumber = Math.floor(maxNumber * Math.random() + 1);
+      arrs.some((data) => data === choiseNumber)
+        ? i--
+        : arrs.push(choiseNumber);
+    }
+    arrs.sort((a, b) => a - b);
+    pass = deduplicationFunc(lottoList, arrs);
+  }
+  return arrs;
+};
+
+const deduplicationFunc = (lottoList: myLottoList[], testList: number[]) => {
   let pass = true;
+  console.log(testList);
   lottoList.forEach(
     (data) =>
       (pass =
         data.myLottoList.filter((myLotto) => myLotto === testList).length > 0
           ? false
-          : pass)
+          : pass),
   );
   return pass;
 };
@@ -159,6 +293,7 @@ export const {
   LOTTOACTIVEKEY,
   LOTTOCAMERA,
   LOTTOTOASTCLOSE,
+  LOTTORECOMMEND,
 } = lottoSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

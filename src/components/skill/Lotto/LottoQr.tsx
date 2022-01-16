@@ -48,7 +48,7 @@ function LottoQr() {
   };
   return (
     <>
-      <Button
+      {/* <Button
         onClick={() =>
           handleScan(
             'https://m.dhlottery.co.kr/qr.do?method=winQr&v=0997q071524404245q151718273144q111215232740q031114212226q2328304042441785483554',
@@ -56,7 +56,7 @@ function LottoQr() {
         }
       >
         dd
-      </Button>
+      </Button> */}
       <Toast onClose={setClose} show={toast} delay={1500} autohide>
         <Toast.Body>추가되었습니다!</Toast.Body>
       </Toast>
