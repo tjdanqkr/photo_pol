@@ -1,8 +1,8 @@
-import { Table } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { LOTTOACTIVEKEY, LOTTOREMOVE } from "../../../store/lotto";
-import styled from "styled-components";
-import { GoDiffRemoved } from "react-icons/go";
+import { Table } from 'react-bootstrap';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { LOTTOACTIVEKEY, LOTTOREMOVE } from '../../../store/lotto';
+import styled from 'styled-components';
+import { GoDiffRemoved } from 'react-icons/go';
 
 const Accordion = styled.div`
   width: 100%;
@@ -31,7 +31,7 @@ const AccordionHeader = styled.div`
   padding: 1rem 1.25rem;
   font-size: 1rem;
   background-color: ${(props) =>
-    props.unselectable === "on" ? "#d9d9d9" : "#fff"};
+    props.unselectable === 'on' ? '#d9d9d9' : '#fff'};
   border: 0;
   border-radius: 0;
   overflow-anchor: none;
@@ -43,7 +43,7 @@ const AccordionHeaderButton = styled.button`
   color: #212529;
   text-align: left;
   background-color: ${(props) =>
-    props.unselectable === "on" ? "#d9d9d9" : "#fff"};
+    props.unselectable === 'on' ? '#d9d9d9' : '#fff'};
   border: 0;
   border-radius: 0;
   overflow-anchor: none;
@@ -54,7 +54,7 @@ function LottoMyNumber() {
   const activeKey = useAppSelector((state) => state.lotto.activeKey);
   const dispatch = useAppDispatch();
 
-  const activeKeyHandler = (key: number, type: "open" | "close") => {
+  const activeKeyHandler = (key: number, type: 'open' | 'close') => {
     dispatch(LOTTOACTIVEKEY({ key, type }));
   };
 
@@ -68,7 +68,7 @@ function LottoMyNumber() {
         <AccordionForm key={i}>
           <AccordionHeader
             unselectable={
-              activeKey.find((data) => data === i) !== undefined ? "on" : "off"
+              activeKey.find((data) => data === i) !== undefined ? 'on' : 'off'
             }
           >
             <AccordionHeaderButton
@@ -76,16 +76,18 @@ function LottoMyNumber() {
                 activeKeyHandler(
                   i,
                   activeKey.find((data) => data === i) !== undefined
-                    ? "close"
-                    : "open"
+                    ? 'close'
+                    : 'open',
                 )
               }
               unselectable={
                 activeKey.find((data) => data === i) !== undefined
-                  ? "on"
-                  : "off"
+                  ? 'on'
+                  : 'off'
               }
-            >{`${lotto.round} 회차(${i + 1})`}</AccordionHeaderButton>
+            >{`${lotto.round} 회차(${i + 1})\n ${
+              lotto.url
+            }`}</AccordionHeaderButton>
             <AccordionRemoveButton onClick={() => removeHandler(i)}>
               <GoDiffRemoved></GoDiffRemoved>
             </AccordionRemoveButton>
