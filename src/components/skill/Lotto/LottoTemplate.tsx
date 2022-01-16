@@ -24,21 +24,21 @@ function LottoQrTemplate() {
 
   const handleScanTest = () => {
     if (test) {
-      setRedux(test);
+      // setRedux(test);
     }
   };
 
-  const setRedux = async (scanResult: string) => {
-    try {
-      const queryData = scanResult.split('v=')[1].split('q');
-      const round = Number(queryData[0]);
-      const numberList = queryData.slice(1);
-      const myNumberList = await myNumberListFunc(numberList);
-      dispatch(LOTTOADD({ round, myLottoList: myNumberList }));
-    } catch (err: any) {
-      console.error(err);
-    }
-  };
+  // const setRedux = async (scanResult: string) => {
+  //   try {
+  //     const queryData = scanResult.split('v=')[1].split('q');
+  //     const round = Number(queryData[0]);
+  //     const numberList = queryData.slice(1);
+  //     const myNumberList = await myNumberListFunc(numberList);
+  //     dispatch(LOTTOADD({ round, myLottoList: myNumberList }));
+  //   } catch (err: any) {
+  //     console.error(err);
+  //   }
+  // };
   const myNumberListFunc = (numberList: string[]) => {
     return numberList.map((data) => {
       let Numbers: number[] = [];

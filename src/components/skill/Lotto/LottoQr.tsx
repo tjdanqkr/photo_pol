@@ -29,7 +29,7 @@ function LottoQr() {
       const round = Number(queryData[0]);
       const numberList = queryData.slice(1);
       const myNumberList = await myNumberListFunc(numberList);
-      dispatch(LOTTOADD({ round, myLottoList: myNumberList }));
+      dispatch(LOTTOADD({ round, myLottoList: myNumberList, url: scanResult }));
     } catch (err: any) {
       console.error(err);
     }

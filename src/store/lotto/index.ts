@@ -10,6 +10,7 @@ type statisticsType = {
 type myLottoList = {
   round: number;
   myLottoList: number[][];
+  url: string;
 };
 
 interface LottoState {
@@ -42,6 +43,7 @@ const initialState: LottoState = {
 interface IPayLoadLottoState {
   round: number;
   myLottoList: number[][];
+  url: string;
 }
 interface IPayLoadActiveKeyState {
   key: number;
@@ -56,8 +58,8 @@ export const lottoSlice = createSlice({
   initialState,
   reducers: {
     LOTTOADD: (state, action: PayloadAction<IPayLoadLottoState>) => {
-      const { myLottoList, round } = action.payload;
-      const obj = { round, myLottoList };
+      const { myLottoList, round, url } = action.payload;
+      const obj = { round, myLottoList, url };
       state.lottoList.push(obj);
       state.toast = true;
     },
