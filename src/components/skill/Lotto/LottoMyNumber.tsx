@@ -1,8 +1,12 @@
-import { Table } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { LOTTOACTIVEKEY, LOTTOREMOVE } from "../../../store/lotto";
-import styled from "styled-components";
-import { GoDiffRemoved } from "react-icons/go";
+import { Table, Button } from 'react-bootstrap';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import {
+  LOTTOACTIVEKEY,
+  LOTTOANALYZE,
+  LOTTOREMOVE,
+} from '../../../store/lotto';
+import styled from 'styled-components';
+import { GoDiffRemoved } from 'react-icons/go';
 
 const Accordion = styled.div`
   width: 100%;
@@ -31,7 +35,7 @@ const AccordionHeader = styled.div`
   padding: 1rem 1.25rem;
   font-size: 1rem;
   background-color: ${(props) =>
-    props.unselectable === "on" ? "#d9d9d9" : "#fff"};
+    props.unselectable === 'on' ? '#d9d9d9' : '#fff'};
   border: 0;
   border-radius: 0;
   overflow-anchor: none;
@@ -43,7 +47,7 @@ const AccordionHeaderButton = styled.button`
   color: #212529;
   text-align: left;
   background-color: ${(props) =>
-    props.unselectable === "on" ? "#d9d9d9" : "#fff"};
+    props.unselectable === 'on' ? '#d9d9d9' : '#fff'};
   border: 0;
   border-radius: 0;
   overflow-anchor: none;
@@ -54,63 +58,75 @@ function LottoMyNumber() {
   const activeKey = useAppSelector((state) => state.lotto.activeKey);
   const dispatch = useAppDispatch();
 
-  const activeKeyHandler = (key: number, type: "open" | "close") => {
+  const activeKeyHandler = (key: number, type: 'open' | 'close') => {
     dispatch(LOTTOACTIVEKEY({ key, type }));
   };
 
   const removeHandler = (key: number) => {
     dispatch(LOTTOREMOVE({ key }));
   };
+  const analyzeHandler = () => {
+    if (lottoList.length > 2) dispatch(LOTTOANALYZE());
+  };
 
   return (
-    <Accordion>
-      {lottoList.map((lotto, i) => (
-        <AccordionForm key={i}>
-          <AccordionHeader
-            unselectable={
-              activeKey.find((data) => data === i) !== undefined ? "on" : "off"
-            }
-          >
-            <AccordionHeaderButton
-              onClick={() =>
-                activeKeyHandler(
-                  i,
-                  activeKey.find((data) => data === i) !== undefined
-                    ? "close"
-                    : "open"
-                )
-              }
+    <>
+      <Button onClick={analyzeHandler} variant="outline-secondary">
+        analyze
+      </Button>
+      <Accordion>
+        {lottoList.map((lotto, i) => (
+          <AccordionForm key={i}>
+            <AccordionHeader
               unselectable={
                 activeKey.find((data) => data === i) !== undefined
-                  ? "on"
-                  : "off"
+                  ? 'on'
+                  : 'off'
               }
-            >{`${lotto.round} 회차(${i + 1})`}</AccordionHeaderButton>
-            <AccordionRemoveButton onClick={() => removeHandler(i)}>
-              <GoDiffRemoved></GoDiffRemoved>
-            </AccordionRemoveButton>
-          </AccordionHeader>
-          {activeKey.find((data) => data === i) !== undefined ? (
-            <AccordionBody>
-              <Table striped bordered hover size="sm">
-                <thead></thead>
-                <tbody>
-                  {lotto.myLottoList.map((numbers, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td></td>
-                      {numbers.map((number) => (
-                        <td key={number}>{number}</td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </AccordionBody>
-          ) : null}
-        </AccordionForm>
-      ))}
-    </Accordion>
+            >
+              <AccordionHeaderButton
+                onClick={() =>
+                  activeKeyHandler(
+                    i,
+                    activeKey.find((data) => data === i) !== undefined
+                      ? 'close'
+                      : 'open',
+                  )
+                }
+                unselectable={
+                  activeKey.find((data) => data === i) !== undefined
+                    ? 'on'
+                    : 'off'
+                }
+              >{`${lotto.round} 회차(${i + 1})\n ${
+                lotto.url
+              }`}</AccordionHeaderButton>
+              <AccordionRemoveButton onClick={() => removeHandler(i)}>
+                <GoDiffRemoved></GoDiffRemoved>
+              </AccordionRemoveButton>
+            </AccordionHeader>
+            {activeKey.find((data) => data === i) !== undefined ? (
+              <AccordionBody>
+                <Table striped bordered hover size="sm">
+                  <thead></thead>
+                  <tbody>
+                    {lotto.myLottoList.map((numbers, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td></td>
+                        {numbers.map((number) => (
+                          <td key={number}>{number}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </AccordionBody>
+            ) : null}
+          </AccordionForm>
+        ))}
+      </Accordion>
+    </>
   );
 }
 export default LottoMyNumber;
