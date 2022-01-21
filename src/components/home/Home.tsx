@@ -25,6 +25,7 @@ const TitleBox = styled.div`
   display: flex;
   align-items: flex-end;
   flex-wrap: wrap;
+  padding-top: 2em;
 `;
 const GrayBox = styled.div`
   background-color: #e2e2e2;
@@ -141,7 +142,6 @@ function Home() {
       sub: "4444",
     },
   ];
-
 
   return (
     <>

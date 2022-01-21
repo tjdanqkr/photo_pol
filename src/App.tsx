@@ -20,7 +20,7 @@ const MyContainer = styled.div`
 const Main = styled.div`
   min-height: 100%;
   margin-bottom: 2em;
-  margin-top: 2em;
+  margin-top: 0;
 `;
 
 function App() {

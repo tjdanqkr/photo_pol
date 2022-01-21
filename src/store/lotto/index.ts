@@ -33,7 +33,7 @@ const initialState: LottoState = {
   statisticsNumDesc: [],
   statisticsAppDesc: [],
   activeKey: [],
-  camera: true,
+  camera: false,
   toast: false,
   recommendList: [],
   top5List: [],
