@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import Home from '../components/home/Home';
+import SelfIntroduce from '../components/self-introduce/Self-Introduce';
 import CoronaMap from '../components/skill/Corona/CoronaMap';
 import LottoQrNumber from '../components/skill/Lotto/LottoTemplate';
 
@@ -14,6 +15,9 @@ const ControlRoute: React.FC = () => (
     </Route>
     <Route path="/skill/2">
       <LottoQrNumber></LottoQrNumber>
+    </Route>
+    <Route path="/selfintroduce">
+      <SelfIntroduce />
     </Route>
     <Route path="*">
       <Home />
