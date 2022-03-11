@@ -40,12 +40,12 @@ function Headers() {
                   Lotto
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link as={Link} to="/userlog">
+              <Nav.Link as={Link} to="/selfintroduce">
                 <strong>self-introduction</strong>
               </Nav.Link>
-              <Nav.Link as={Link} to="/userlog">
+              {/* <Nav.Link as={Link} to="/userlog">
                 <strong>etc</strong>
-              </Nav.Link>
+              </Nav.Link> */}
               {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

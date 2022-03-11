@@ -1,9 +1,10 @@
-import { Col, Row, Container } from "react-bootstrap";
-import styled from "styled-components";
-import logosvg from "../../img/logo.svg";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { onClickToggle } from "../../store/toggle";
-import "./Home.css";
+import { Col, Row, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import logosvg from '../../img/logo.svg';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { onClickToggle } from '../../store/toggle';
+import './Home.css';
 const Title = styled.div`
   background-color: #212529;
   color: white;
@@ -119,6 +120,7 @@ const ToggleItem = styled.div`
 type content = {
   title: string;
   sub: string;
+  to: string;
 }[];
 
 function Home() {
@@ -126,20 +128,14 @@ function Home() {
   const dispatch = useAppDispatch();
   const contentList: content = [
     {
-      title: "1111",
-      sub: "1111",
+      title: 'Corona',
+      sub: '서울 코로나 api(현재는 사라짐)를 활용하여 대용량 데이터를 저장 및 가져오는 기능',
+      to: 'skill/1',
     },
     {
-      title: "2222",
-      sub: "2222",
-    },
-    {
-      title: "3333",
-      sub: "3333",
-    },
-    {
-      title: "4444",
-      sub: "4444",
+      title: 'Lotto',
+      sub: '취미로 하는 로또를 사용해 혼자의 분석 방법으로 만든 프로그램',
+      to: 'skill/2',
     },
   ];
 
@@ -195,12 +191,12 @@ function Home() {
                 {toggle.map((data, i) => (
                   <Col md={6} key={i}>
                     <div
-                      className={data.open ? "ToggleBoxActive" : "ToggleBox"}
+                      className={data.open ? 'ToggleBoxActive' : 'ToggleBox'}
                       onClick={() => dispatch(onClickToggle(i))}
                     >
                       <img
                         src={`${process.env.PUBLIC_URL}/${data.img}`}
-                        style={{ width: "100px", height: "100px" }}
+                        style={{ width: '100px', height: '100px' }}
                         alt={data.alt}
                       ></img>
                       <h3>
@@ -212,11 +208,11 @@ function Home() {
                       <ToggleItemTemplate>
                         <ToggleScroll>
                           {data.content.map((con, i) => (
-                            <ToggleItem key={i} style={{ textAlign: "center" }}>
+                            <ToggleItem key={i} style={{ textAlign: 'center' }}>
                               <img
                                 src={`${process.env.PUBLIC_URL}/${con.img}`}
                                 alt={con.alt}
-                                style={{ width: "100%" }}
+                                style={{ width: '100%' }}
                               ></img>
                               <b>{`<${con.alt}>`}</b>
                               {data.content.length !== i + 1 ? <hr></hr> : null}
@@ -237,7 +233,15 @@ function Home() {
             {contentList.map((data, i) => (
               <Col md={6} key={i}>
                 <ContentForm>
-                  <ContentTitle>{data.title}</ContentTitle>
+                  <ContentTitle>
+                    <Link
+                      to={data.to}
+                      style={{ textDecoration: 'none', color: 'black' }}
+                    >
+                      {data.title}
+                    </Link>
+                  </ContentTitle>
+
                   <ContentSub>{data.sub}</ContentSub>
                 </ContentForm>
               </Col>
