@@ -1,10 +1,10 @@
-import { Col, Row, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import logosvg from "../../img/logo.svg";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { onClickToggle } from "../../store/toggle";
-import "./Home.css";
+import { Col, Row, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import logosvg from '../../img/logo.svg';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { onClickToggle } from '../../store/toggle';
+import './Home.css';
 const Title = styled.div`
   background-color: #212529;
   color: white;
@@ -61,19 +61,23 @@ const ContentForm = styled.div`
   margin-bottom: 20 px;
   flex-direction: column;
   align-items: stretch;
-  height: 30em;
+
   padding: 3em;
 `;
 
 const ContentTitle = styled.div`
+  color: ${(props) => props.theme.color};
   font-size: 2em;
 `;
 
-const ContentSub = styled.div`
-  background-color: #b7a9ff;
+const ContentSub = styled.span`
+  background-color: #f6f6f6;
   height: 100%;
   border-radius: 1em;
   padding: 2em;
+  &:hover {
+    box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
+  }
 `;
 const ToggleArrow = styled.div`
   height: 12px;
@@ -113,14 +117,24 @@ const ToggleScroll = styled.div`
   }
 `;
 const ToggleItem = styled.div`
-  color: black;
   text-align: center;
+`;
+const StrongMessage = styled.b`
+  font-size: 1em;
+`;
+const WeakMessage = styled.p``;
+
+const ContentSubText = styled.div`
+  color: black;
+  margin-top: 1em;
+  margin-bottom: 1em;
 `;
 
 type content = {
   title: string;
-  sub: string;
+  sub: JSX.Element;
   to: string;
+  img: string;
 }[];
 
 function Home() {
@@ -128,14 +142,38 @@ function Home() {
   const dispatch = useAppDispatch();
   const contentList: content = [
     {
-      title: "COVID-19",
-      sub: "서울 코로나 api(현재는 사라짐)를 활용하여 대용량 데이터를 저장 및 가져오는 기능",
-      to: "skill/1",
+      title: 'COVID-19',
+      img: '/img/ContentImgs/main_covid.jpg',
+      sub: (
+        <>
+          <StrongMessage>
+            서울시의 코로나 api를 활용하여 코로나 확진자 정보와 관련된 대용량
+            데이터를 저장하고 가져오는 기능을 구현함
+          </StrongMessage>
+          <WeakMessage>
+            (단, 결산된 데이터 수집을 위해 실시간 배치가 아닌 새벽 시간대에 배치
+            프로그램을 돌림)
+          </WeakMessage>
+          <br />
+          <StrongMessage>
+            {'=>현재는 서울시에 데이터 제공이 종료되어 업데이트 되지 않음'}
+          </StrongMessage>
+        </>
+      ),
+      to: 'skill/1',
     },
     {
-      title: "Lotto",
-      sub: "취미로 하는 로또를 사용해 혼자의 분석 방법으로 만든 프로그램",
-      to: "skill/2",
+      title: 'Lotto',
+      img: '/img/ContentImgs/main_lotto.png',
+      sub: (
+        <>
+          <StrongMessage>
+            이미 구매한 로또 번호를 분석하여 랜덤으로 새로운 로또 번호를
+            추천해주는 프로그램을 구현함
+          </StrongMessage>
+        </>
+      ),
+      to: 'skill/2',
     },
   ];
 
@@ -191,12 +229,12 @@ function Home() {
                 {toggle.map((data, i) => (
                   <Col md={6} key={i}>
                     <div
-                      className={data.open ? "ToggleBoxActive" : "ToggleBox"}
+                      className={data.open ? 'ToggleBoxActive' : 'ToggleBox'}
                       onClick={() => dispatch(onClickToggle(i))}
                     >
                       <img
                         src={`${process.env.PUBLIC_URL}/${data.img}`}
-                        style={{ width: "100px", height: "100px" }}
+                        style={{ width: '100px', height: '100px' }}
                         alt={data.alt}
                       ></img>
                       <h3>
@@ -208,11 +246,11 @@ function Home() {
                       <ToggleItemTemplate>
                         <ToggleScroll>
                           {data.content.map((con, i) => (
-                            <ToggleItem key={i} style={{ textAlign: "center" }}>
+                            <ToggleItem key={i} style={{ textAlign: 'center' }}>
                               <img
                                 src={`${process.env.PUBLIC_URL}/${con.img}`}
                                 alt={con.alt}
-                                style={{ width: "100%" }}
+                                style={{ width: '100%' }}
                               ></img>
                               <b>{`<${con.alt}>`}</b>
                               {data.content.length !== i + 1 ? <hr></hr> : null}
@@ -232,14 +270,17 @@ function Home() {
           <Row>
             {contentList.map((data, i) => (
               <Col md={6} key={i}>
-                <Link
-                  to={data.to}
-                  style={{ textDecoration: "none", color: "black" }}
-                >
+                <Link to={data.to} style={{ textDecoration: 'none' }}>
                   <ContentForm>
                     <ContentTitle>{data.title}</ContentTitle>
 
-                    <ContentSub>{data.sub}</ContentSub>
+                    <ContentSub>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/${data.img}`}
+                        style={{ width: '100%', height: '100%' }}
+                      ></img>
+                      <ContentSubText>{data.sub}</ContentSubText>
+                    </ContentSub>
                   </ContentForm>
                 </Link>
               </Col>

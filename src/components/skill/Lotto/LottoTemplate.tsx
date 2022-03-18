@@ -1,18 +1,22 @@
-import { useState } from "react";
-import { Col, Row, Container, Button } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { LOTTOADD, LOTTOANALYZE, LOTTOCAMERA } from "../../../store/lotto";
+import { useState } from 'react';
+import { Col, Row, Container, Button } from 'react-bootstrap';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { LOTTOADD, LOTTOANALYZE, LOTTOCAMERA } from '../../../store/lotto';
 
-import LottoQr from "./LottoQr";
-import LottoMyNumber from "./LottoMyNumber";
-import styled from "styled-components";
-import LottoAnalyze from "./LottoAnalyze";
-import LottoRecommend from "./LottoRecommend";
+import LottoQr from './LottoQr';
+import LottoMyNumber from './LottoMyNumber';
+import styled from 'styled-components';
+import LottoAnalyze from './LottoAnalyze';
+import LottoRecommend from './LottoRecommend';
 const Box = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.125);
   width: 100%;
   padding: 1rem;
 `;
+const StrongMessage = styled.b`
+  font-size: 1em;
+`;
+
 function LottoQrTemplate() {
   const camera = useAppSelector((state) => state.lotto.camera);
 
@@ -31,20 +35,40 @@ function LottoQrTemplate() {
       </Row>
       <Row>
         <Col md={12}>
-          <Box>
-            <h2>
-              <strong>제 취미가 로또서 만든 기능입니다</strong>
-            </h2>
-            <h4>로또를 자동으로 사고 싶은 만큼 사고</h4>
-            <h4>그 자동으로 나온 번호를 제 나름의 분석 법을 정의 했고,</h4>
-            <h4>그리고 추천 번호 까지 해봅니다.</h4>
-            <h4>추천 번호는 5개 숫자 조합으로 </h4>
-            <h4>안나온 번호의 n개로 랜덤 조합 1개</h4>
-            <h4>나온 번호 top 5로 랜덤 n개의 번호 조합 1개</h4>
-            <h4>나온 번호로 랜덤 조합 1개</h4>
-            <h4>나머지는 그냥 랜덤 번호입니다.</h4>
-            <h4>모두 기본 조합에서 나오지 않은 번호로 만들었습니다.</h4>
-          </Box>
+          <h2>
+            <b>사용방법</b>
+          </h2>
+          <Row>
+            <Col md={6}>
+              <Box>
+                <img
+                  src={`${process.env.PUBLIC_URL}/img/Lotto/Lotto_1.jpg`}
+                  style={{ width: '100%', height: '100%' }}
+                ></img>
+                <StrongMessage>
+                  1. 하단의 QR Code scan을 통해 이미 구매한 로또의 QR Code를
+                  스캔한다.
+                </StrongMessage>
+                <hr></hr>
+                <img
+                  src={`${process.env.PUBLIC_URL}/img/Lotto/Lotto_2.png`}
+                  style={{ width: '100%', height: '100%' }}
+                ></img>
+                <StrongMessage>
+                  2. analyze 를 통해 분석된 로또 번호를 확인하고, 추첨하기
+                  버튼을 눌러 추천 번호를 받는다.
+                </StrongMessage>
+              </Box>
+            </Col>
+            <Col md={6}>
+              <Box>
+                <img
+                  src={`${process.env.PUBLIC_URL}/img/Lotto/Lotto_3.png`}
+                  style={{ width: '100%', height: '100%' }}
+                ></img>
+              </Box>
+            </Col>
+          </Row>
         </Col>
       </Row>
       <Row>
@@ -52,7 +76,7 @@ function LottoQrTemplate() {
           <Box>
             <h3>QR Code scan</h3>
             <Button variant="outline-primary" onClick={cameraHandler}>
-              camera{camera ? " close" : " open"}
+              camera{camera ? ' close' : ' open'}
             </Button>
             {camera ? <LottoQr></LottoQr> : null}
           </Box>
