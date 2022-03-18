@@ -8,6 +8,7 @@ import ControlRoute from "./router";
 import Footer from "./components/layout/Footer";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
+import ScrollToTop from "./components/ScrollToTop";
 const MyContainer = styled.div`
   background-color: ${(props) => props.theme.mainBackground};
   color: ${(props) => props.theme.color};
@@ -35,6 +36,7 @@ function App() {
           </header>
           <main>
             <Main>
+              <ScrollToTop></ScrollToTop>
               <ControlRoute></ControlRoute>
             </Main>
           </main>
