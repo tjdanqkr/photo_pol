@@ -51,7 +51,7 @@ function LottoQrTemplate() {
                 </StrongMessage>
                 <hr></hr>
                 <img
-                  src={`${process.env.PUBLIC_URL}/img/Lotto/Lotto_2.png`}
+                  src={`${process.env.PUBLIC_URL}/img/Lotto/Lotto_2.PNG`}
                   style={{ width: '100%', height: '100%' }}
                 ></img>
                 <StrongMessage>
