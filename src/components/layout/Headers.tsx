@@ -1,8 +1,8 @@
-import { Container, Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { darkMode, lightMode } from '../../store/themeMode';
+import { Container, Nav, Navbar, NavDropdown, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { darkMode, lightMode } from "../../store/themeMode";
 const HeaderForm = styled.div`
   font-weight: bolder;
 `;
@@ -18,7 +18,7 @@ function Headers() {
         variant={mode}
         sticky="top"
       >
-        <Container style={{ fontWeight: 'bolder' }}>
+        <Container style={{ fontWeight: "bolder" }}>
           <Navbar.Brand as={Link} to="/">
             <h2>
               <b>박성무의 경력기술서</b>
@@ -34,15 +34,15 @@ function Headers() {
               <Nav.Link as={Link} to="/userlog"></Nav.Link>
               <NavDropdown title="skill" id="collasible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/skill/1">
-                  corona
+                  COVID-19
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/skill/2">
                   Lotto
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link as={Link} to="/selfintroduce">
+              {/* <Nav.Link as={Link} to="/selfintroduce">
                 <strong>self-introduction</strong>
-              </Nav.Link>
+              </Nav.Link> */}
               {/* <Nav.Link as={Link} to="/userlog">
                 <strong>etc</strong>
               </Nav.Link> */}
@@ -60,14 +60,14 @@ function Headers() {
             </Nav>
             <Nav>
               <Button
-                variant={mode === 'dark' ? 'secondary' : 'dark'}
+                variant={mode === "dark" ? "secondary" : "dark"}
                 onClick={() => {
-                  mode === 'dark'
+                  mode === "dark"
                     ? dispatch(lightMode())
                     : dispatch(darkMode());
                 }}
               >
-                {mode === 'dark' ? 'light' : 'dark'}
+                {mode === "dark" ? "light" : "dark"}
               </Button>
             </Nav>
           </Navbar.Collapse>

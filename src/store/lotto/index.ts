@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../store';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "../../store";
 
 // Define a type for the slice state
 
@@ -47,14 +47,14 @@ interface IPayLoadLottoState {
 }
 interface IPayLoadActiveKeyState {
   key: number;
-  type: 'open' | 'close';
+  type: "open" | "close";
 }
 interface IPayLoadRemoveState {
   key: number;
 }
 
 export const lottoSlice = createSlice({
-  name: 'lotto',
+  name: "lotto",
   initialState,
   reducers: {
     LOTTOADD: (state, action: PayloadAction<IPayLoadLottoState>) => {
@@ -79,7 +79,7 @@ export const lottoSlice = createSlice({
       lottoList.forEach((list) => {
         list.myLottoList.flat().forEach((num) => {
           const findI = statisticsList.findIndex(
-            (statistics) => statistics.num === num,
+            (statistics) => statistics.num === num
           );
           findI > -1
             ? statisticsList[findI].appearance++
@@ -88,7 +88,7 @@ export const lottoSlice = createSlice({
       });
       const NumDesc = statisticsList.sort((a, b) => a.num - b.num);
       const AppDesc = statisticsList.sort(
-        (a, b) => b.appearance - a.appearance,
+        (a, b) => b.appearance - a.appearance
       );
       state.statisticsNumDesc = NumDesc;
       state.statisticsAppDesc = AppDesc;
@@ -103,7 +103,7 @@ export const lottoSlice = createSlice({
       let { activeKey } = state;
       const { key, type } = action.payload;
 
-      if (type === 'close') {
+      if (type === "close") {
         state.activeKey = activeKey.filter((data) => data !== key);
       } else {
         activeKey.push(key);
@@ -123,11 +123,11 @@ export const lottoSlice = createSlice({
         const topRandomNumber = makeTopRandomNumber(lottoList, top5List);
         const existRandomNumber = makeExistRandomNumber(
           lottoList,
-          statisticsNumDesc,
+          statisticsNumDesc
         );
         const notExistRandomNumber = makeNotExistRandomNumber(
           lottoList,
-          notExistList,
+          notExistList
         );
         const randomNumber1 = makeRandomNumber(lottoList);
         const randomNumber2 = makeRandomNumber(lottoList);
@@ -143,8 +143,8 @@ export const lottoSlice = createSlice({
           (data) =>
             checkList.filter(
               (filterdata) =>
-                JSON.stringify(data) === JSON.stringify(filterdata),
-            ).length > 1,
+                JSON.stringify(data) === JSON.stringify(filterdata)
+            ).length > 1
         );
         check = checkArr.some((data) => data === true);
       }
@@ -161,7 +161,7 @@ const makeTop5List = (statisticsNumDesc: statisticsType[]) => {
   let top5List: number[] = [];
   while (top5List.length < maxCount) {
     const countNum = statisticsNumDesc.filter(
-      (data) => countAppearance === data.appearance,
+      (data) => countAppearance === data.appearance
     );
 
     countAppearance--;
@@ -213,7 +213,7 @@ const makeTopRandomNumber = (lottoList: myLottoList[], top5List: number[]) => {
 };
 const makeExistRandomNumber = (
   lottoList: myLottoList[],
-  statisticsNumDesc: statisticsType[],
+  statisticsNumDesc: statisticsType[]
 ) => {
   const listLength = statisticsNumDesc.length;
   const maxLength = 6;
@@ -242,12 +242,13 @@ const makeExistRandomNumber = (
 };
 const makeNotExistRandomNumber = (
   lottoList: myLottoList[],
-  notExistList: number[],
+  notExistList: number[]
 ) => {
   const listLength = notExistList.length;
   const maxLength = 6;
   const maxNumber = 45;
-  const useUnit = Math.floor(listLength * Math.random() + 1);
+  const useUnit =
+    listLength > 0 ? Math.floor(listLength * Math.random() + 1) : 0;
   let pass = true;
   let arrs: number[] = [];
   while (pass) {
@@ -269,6 +270,7 @@ const makeNotExistRandomNumber = (
   }
   return arrs;
 };
+
 const makeRandomNumber = (lottoList: myLottoList[]) => {
   const maxLength = 6;
   const maxNumber = 45;
@@ -297,7 +299,7 @@ const deduplicationFunc = (lottoList: myLottoList[], testList: number[]) => {
       (pass =
         data.myLottoList.filter((myLotto) => myLotto === testList).length > 0
           ? false
-          : pass),
+          : pass)
   );
   return pass;
 };

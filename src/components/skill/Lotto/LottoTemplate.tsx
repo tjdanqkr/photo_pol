@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Col, Row, Container, Button } from 'react-bootstrap';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { LOTTOADD, LOTTOANALYZE, LOTTOCAMERA } from '../../../store/lotto';
+import { useState } from "react";
+import { Col, Row, Container, Button } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { LOTTOADD, LOTTOANALYZE, LOTTOCAMERA } from "../../../store/lotto";
 
-import LottoQr from './LottoQr';
-import LottoMyNumber from './LottoMyNumber';
-import styled from 'styled-components';
-import LottoAnalyze from './LottoAnalyze';
-import LottoRecommend from './LottoRecommend';
+import LottoQr from "./LottoQr";
+import LottoMyNumber from "./LottoMyNumber";
+import styled from "styled-components";
+import LottoAnalyze from "./LottoAnalyze";
+import LottoRecommend from "./LottoRecommend";
 const Box = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.125);
   width: 100%;
@@ -24,6 +24,11 @@ function LottoQrTemplate() {
 
   return (
     <Container fluid="md">
+      <Row>
+        <Col md={12}>
+          <span></span>
+        </Col>
+      </Row>
       <Row>
         <Col md={12}>
           <Box>
@@ -47,7 +52,7 @@ function LottoQrTemplate() {
           <Box>
             <h3>QR Code scan</h3>
             <Button variant="outline-primary" onClick={cameraHandler}>
-              camera{camera ? ' close' : ' open'}
+              camera{camera ? " close" : " open"}
             </Button>
             {camera ? <LottoQr></LottoQr> : null}
           </Box>
